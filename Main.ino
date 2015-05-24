@@ -38,6 +38,8 @@ void setup()
 	}
 	Serial.println(" done");
 	Serial.println("SENSOR ACTIVE");
+		lcd.print("SENSOR ACTIVE");
+
 	delay(50);
 	Serial.begin(9600); // Avvia la comunicazione seriale
 	irrecv.enableIRIn(); // Avvia il ricevitore
