@@ -8,7 +8,7 @@ int pirPin = 3; //pin del sensore di movimento
 int ledPin = 13;//pin del led di stato
 int Touch = 12;//pin del sensore di tocco
 float celsius = 0, farhenheit = 0; // temperature variables
-float millivolts; //dichiarazione di variabile tensione (float Ã¨ per i numeri con la virgola)
+float millivolts; //dichiarazione di variabile tensione (float è per i numeri con la virgola)
 int sensor;
 IRrecv irrecv(receiver); // Creare un istanza irrecv
 decode_results results;
@@ -25,10 +25,10 @@ void setup()
 	pinMode(Touch, INPUT);
 	pinMode(pirPin, INPUT);
 	pinMode(ledPin, OUTPUT);
-	pinMode(R1, OUTPUT); //Setto i relÃ© In OUTPUT prima di avviare il codice
-	pinMode(R2, OUTPUT); //Setto i relÃ© In OUTPUT prima di avviare il codice
-	digitalWrite(R1, HIGH);//Setto i relÃ© spenti prima di avviare il codice
-	digitalWrite(R2, HIGH);//Setto i relÃ© spenti prima di avviare il codice
+	pinMode(R1, OUTPUT); //Setto i relé In OUTPUT prima di avviare il codice
+	pinMode(R2, OUTPUT); //Setto i relé In OUTPUT prima di avviare il codice
+	digitalWrite(R1, HIGH);//Setto i relé spenti prima di avviare il codice
+	digitalWrite(R2, HIGH);//Setto i relé spenti prima di avviare il codice
 	digitalWrite(pirPin, LOW);
 	Serial.print("calibrating sensor ");
 	for(int i = 0; i < calibrationTime; i++)
@@ -38,8 +38,6 @@ void setup()
 	}
 	Serial.println(" done");
 	Serial.println("SENSOR ACTIVE");
-		lcd.print("SENSOR ACTIVE");
-
 	delay(50);
 	Serial.begin(9600); // Avvia la comunicazione seriale
 	irrecv.enableIRIn(); // Avvia il ricevitore
@@ -75,7 +73,7 @@ void loop()
 		}
 	}
 
-	if (irrecv.decode(&results)) // Verificare se il codice Ã© stato ricevuto
+	if (irrecv.decode(&results)) // Verificare se il codice é stato ricevuto
 	{
 		Serial.print("Codice:");
 		Serial.println(results.value, HEX); //Visualizza il codice IR in esadecimale
@@ -84,32 +82,29 @@ void loop()
 
 	if ( results.value == 0x28D7 ||  results.value == 0xC03F28D7 )  //Volume+
 	{
-		digitalWrite(R1, LOW);   // RelÃ©1 Acceso
+		digitalWrite(R1, LOW);   // Relé1 Acceso
 
 	}
 	if ( results.value == 0xF807 ||  results.value == 0xC03FF807 )  //Volume-
 	{
-		digitalWrite(R1, HIGH );   // RelÃ©1 Spento
+		digitalWrite(R1, HIGH );   // Relé1 Spento
 
 	}
 	if ( results.value == 0xA857  ||  results.value == 0xC03FA857 )  //ChannelUp
 	{
-		digitalWrite(R2, LOW );   // RelÃ©2 Acceso
+		digitalWrite(R2, LOW );   // Relé2 Acceso
 	}
 	if ( results.value == 0xA05F  ||  results.value == 0xC03FA05F )  //ChannelDown
 	{
-		digitalWrite(R2, HIGH);   // RelÃ©2 Spento
+		digitalWrite(R2, HIGH);   // Relé2 Spento
 	}
-	if ( results.value == 0x906F ||  results.value == 0xC03F906F )  //0= 1MinutoTimer
-	{
-		delay(60000);
-		digitalWrite(R1, HIGH);
-		digitalWrite(R2, HIGH);      // Tutti i RelÃ© Spenti dopo 1 minuto
-	}
+	
+		
+	
 
 	sensor = analogRead(temp); //lettura valore del sensore LM35 messo sull'ingresso analogico A0
 	millivolts = ( sensor / 1024.0) * 5000; //formula per ottenere la tensione di uscita dell'LM35 in millivolts
-	celsius = millivolts / 10; // valore espresso in gradi Celsius (l'out del sensore Ã¨ 10mv per grado)
+	celsius = millivolts / 10; // valore espresso in gradi Celsius (l'out del sensore è 10mv per grado)
 
 	Serial.print("Temperatura:");
 	Serial.println(celsius);
